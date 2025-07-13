@@ -150,3 +150,5 @@ class DashboardView(ListView):
         context['price_list'] = price_list
 
         return context
+
+

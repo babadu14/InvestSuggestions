@@ -1,91 +1,82 @@
-#🚀 Crypto Trading Assistant Dashboard
-A Django-based web application that analyzes recent cryptocurrency price movements using technical indicators like RSI, EMA, ATR, and momentum to provide trading advice, leverage suggestions, and take-profit/stop-loss levels.
+# 💹 AI-Powered Crypto Dashboard
 
+A Django-based web application that fetches real-time cryptocurrency price data, visualizes it with charts, and provides intelligent trading suggestions using technical indicators such as **RSI**, **EMA**, **momentum**, and **ATR-based TP/SL**. It also suggests a **leverage level** based on market signals.
 
-🧠 Features
-📊 Price Tracking for multiple coins (e.g., Bitcoin, Ethereum, Solana, Ripple).
+---
 
-📈 RSI (Relative Strength Index): Detects overbought/oversold conditions.
+## 🚀 Features
 
-📉 EMA (Exponential Moving Average): Identifies trend direction.
+- 📊 Visualize price trends for top cryptocurrencies (e.g., Bitcoin, Ethereum, etc.)
+- 🤖 AI-based trading advice (Go LONG / SHORT / NEUTRAL)
+- 🔄 Technical indicators:
+  - Relative Strength Index (RSI)
+  - Exponential Moving Average (EMA)
+  - Momentum Trend Detection
+  - ATR-based Take Profit and Stop Loss
+- ⚙️ Management command to fetch and store historical price data
+- 💡 Suggested leverage level (e.g., 10x, 15x) based on signal strength
+- 🕒 Hourly or daily chart support (based on data availability)
 
-📦 ATR (Average True Range): Used for realistic TP/SL levels based on volatility.
+---
 
-🧭 Momentum Detection: Checks short-term trends (up/down/flat).
+## 🧠 How It Works
 
-🔮 Smart Trading Advice: Based on the combination of RSI + EMA.
+1. **Fetch Data**: 
+   - Management command hits the [CoinGecko API](https://www.coingecko.com/en/api) and stores price data in your database.
+   
+2. **Analyze**:
+   - RSI: Measures overbought/oversold conditions.
+   - EMA: Highlights recent trend strength.
+   - Momentum: Analyzes direction consistency.
+   - ATR: Calculates realistic stop loss / take profit levels.
 
-⚖️ Leverage Suggestions: Dynamically adjusts based on signal strength.
+3. **Suggest**:
+   - Leverage suggestion is based on RSI + momentum.
+   - TP/SL are calculated using ATR for dynamic market conditions.
 
-✅ Built with Django class-based views and background management commands for fetching real-time data.
+---
 
-🏗️ How It Works
-Data Fetching
-A Django management command fetches crypto price data from the CoinGecko API every day/hour (depending on your plan).
+## 🛠️ Tech Stack
 
-Analysis
-The dashboard uses technical indicators:
+- **Python** & **Django** for backend
+- **Chart.js** for chart rendering
+- **Pandas** for technical analysis
+- **HTML/CSS** + Bootstrap (optional) for UI
+- **SQLite** (default), but you can plug in PostgreSQL or MySQL
 
-RSI: Over 70 = sell, below 30 = buy
+---
 
-EMA: If price > EMA = upward trend
+## 📦 Installation
 
-ATR: Used to calculate TP and SL
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/your-username/crypto-dashboard.git
+   cd crypto-dashboard
+Install dependencies:
 
-Momentum: Analyzes 3-candle trend
-
-Advice & Leverage
-Based on the above, the app gives:
-
-Trade direction: LONG / SHORT
-
-TP & SL points
-
-Suggested leverage (e.g., 10x, 15x) based on confidence
-
-🧪 Tech Stack
-Backend: Django (Python)
-
-Data Source: CoinGecko API
-
-Front-end: Django templates (HTML/CSS)
-
-Database: SQLite (by default)
-
-Visualization: Simple price chart using chart data
-
-🚀 Getting Started
-1. Clone the repo
-bash
-Copy
-Edit
-git clone https://github.com/yourusername/crypto-trading-dashboard.git
-cd crypto-trading-dashboard
-2. Install dependencies
 bash
 Copy
 Edit
 pip install -r requirements.txt
-3. Apply migrations and create a superuser
+Run migrations:
+
 bash
 Copy
 Edit
-python manage.py makemigrations
 python manage.py migrate
-python manage.py createsuperuser
-4. Fetch price data
+Fetch historical data:
+
 bash
 Copy
 Edit
-python manage.py fetch_crypto_prices
-5. Run the server
+python manage.py fetch_prices
+Start the server:
+
 bash
 Copy
 Edit
 python manage.py runserver
-⚠️ Disclaimer
-This project is for educational purposes only.
-It does not provide financial advice. Trading cryptocurrencies involves high risk, and past performance does not guarantee future results.
+Go to: http://localhost:8000/dashboard/bitcoin
 
-🙌 Contributing
-Contributions are welcome! Feel free to fork the repository and create a pull request with improvements or new indicators.
+# ⚠️ Disclaimer
+This tool is for educational purposes only and not financial advice. Trading cryptocurrencies is highly volatile and can result in financial losses. Use at your own risk.
