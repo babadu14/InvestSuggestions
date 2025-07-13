@@ -1,4 +1,4 @@
-🚀 Crypto Trading Assistant Dashboard
+#🚀 Crypto Trading Assistant Dashboard
 A Django-based web application that analyzes recent cryptocurrency price movements using technical indicators like RSI, EMA, ATR, and momentum to provide trading advice, leverage suggestions, and take-profit/stop-loss levels.
 
 
