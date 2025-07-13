@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  {{ date_list|json_script:"date-data" }}
+  {{ price_list|json_script:"price-data" }}
+
+  <h2 style="text-align: center;">Price Trend for {{ coin|title }}</h2>
+
+  <div style="max-width: 700px; height: 400px; margin: auto;">
+    <canvas id="priceChart"></canvas>
+  </div>
+
+  <script>
+    const dates = JSON.parse(document.getElementById('date-data').textContent);
+    const prices = JSON.parse(document.getElementById('price-data').textContent);
+
+    const ctx = document.getElementById('priceChart').getContext('2d');
+
+    const priceChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Price (USD)',
+          data: prices,
+          fill: true,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,  // 
+        plugins: {
+          title: {
+            display: true,
+            text: 'Price Trend for {{ coin|title }}'
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Date'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Price (USD)'
+            }
+          }
+        }
+      }
+    });
+  </script>
+
+  <h3 style="text-align: center;">AI Suggestion: {{ advice }}</h3>
+{% if tp and sl %}
+  <p>📈 Take Profit: <strong>${{ tp }}</strong></p>
+  <p>🛑 Stop Loss: <strong>${{ sl }}</strong></p>
+{% else %}
+  <p>Trading advice is not available right now.</p>
+{% endif %}
+
+<p>Momentum {{momentum}}</p>
+
+{% if rsi %}
+    <h4>RSI: {{ rsi }}</h4>
+    {% if rsi > 70 %}
+        <p style="color: red;">Overbought market</p>
+    {% elif rsi < 30 %}
+        <p style="color: green;">Oversold market</p>
+    {% else %}
+        <p>RSI is neutral</p>
+    {% endif %}
+{% endif %}
+
+<p>Leverage {{ suggested_leverage }}</p>
+</body>
+</html>
