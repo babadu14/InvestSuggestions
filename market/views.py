@@ -4,6 +4,7 @@ from django.views.generic import ListView
 from market.utils import calculate_rsi
 import pandas as pd
 from market.utils import atr
+from django.core.cache import cache
 
 # Create your views here.
 
@@ -16,6 +17,7 @@ class DashboardView(ListView):
         coin = self.kwargs.get('coin', 'bitcoin')
         return CryptoPrice.objects.filter(coin=coin).order_by('-timestamp')[:24]
     
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         coin = self.kwargs.get('coin', 'bitcoin')
