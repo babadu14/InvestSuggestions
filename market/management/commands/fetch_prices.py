@@ -3,6 +3,8 @@ import time
 from django.core.management.base import BaseCommand
 from market.models import CryptoPrice
 import requests
+from django.utils import timezone as dj_timezone
+
 
 class Command(BaseCommand):
     help = 'Fetches historical price data for selected cryptocurrencies from CoinGecko'
@@ -22,7 +24,9 @@ class Command(BaseCommand):
                 data = response.json()
 
                 for timestamp, price in data.get('prices', []):
-                    dt = datetime.fromtimestamp(timestamp / 1000, tz=timezone.utc)
+                    dt = dj_timezone.localtime(
+                            datetime.fromtimestamp(timestamp / 1000, tz=timezone.utc)
+                            )
 
                     if not CryptoPrice.objects.filter(coin=coin, timestamp=dt).exists():
                         CryptoPrice.objects.create(

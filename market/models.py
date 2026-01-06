@@ -7,3 +7,6 @@ class CryptoPrice(models.Model):
     price = models.FloatField()
     class Meta:
         unique_together = ('coin', 'timestamp')
+
+    def __str__(self):
+        return self.coin, self.price
